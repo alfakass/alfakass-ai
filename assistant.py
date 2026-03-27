@@ -30,6 +30,11 @@ def chat_with_model(prompt: str) -> str:
         model = MODEL,
     )
 
-    return response.choices[0].message.content
+    reply = response.choices[0].message.content
+
+    assistant_message = {"role": "assistant", "content": reply}
+    conversation_history.append(assistant_message)
+
+    return reply
 
 
