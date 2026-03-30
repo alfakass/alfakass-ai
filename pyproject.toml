@@ -6,8 +6,11 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "fastapi>=0.135.2",
+    "numpy>=2.4.3",
     "openai>=2.30.0",
     "pymupdf>=1.27.2.2",
     "python-dotenv>=1.2.2",
+    "sqlite-utils-sqlite-vec>=0.1.7",
+    "sqlite-vec>=0.1.7",
     "uvicorn>=0.42.0",
 ]

@@ -1,6 +1,7 @@
 import os
 from openai import OpenAI
 from dotenv import load_dotenv
+from rag import get_similar_chunks
 
 load_dotenv()
 
@@ -8,7 +9,7 @@ INFERENCE_ENDPOINT = os.getenv("INFERENCE_ENDPOINT")
 API_KEY = os.getenv("GITHUB_API_KEY")
 MODEL = os.getenv("MODEL")
 
-def chat_with_model(prompt: str) -> str:
+def chat_with_model(query: str) -> str:
     conversation_history = [
         {
             "role": "user",
@@ -16,9 +17,21 @@ def chat_with_model(prompt: str) -> str:
         }
     ]
 
+    chunks = get_similar_chunks(query)
+    context = "\n\n".join(chunks)
+
+    augmented_prompt = f"""
+    Answer the question using ONLY the context below.
+
+    Context:
+    {context}
+
+    Question: {query}
+    """
+
     user_message = {
         "role": "user",
-        "content": prompt
+        "content": augmented_prompt
     }
 
     conversation_history.append(user_message)
